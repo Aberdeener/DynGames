@@ -41,12 +41,19 @@ public final class DynGames extends JavaPlugin {
     private void loadGames() {
         for (String game : Config.GAMES) {
 
+            DynGamesGame gameInstance = null;
+            boolean loaded = false;
+
             if (game.equalsIgnoreCase("tntrun")) {
-                DynGamesGame tntRun = new TntRun();
-                tntRun.enable();
-                this.loadedGames.add(tntRun);
+                gameInstance = new TntRun();
+                loaded = true;
             }
-            else {
+
+            if (loaded) {
+                gameInstance.enable();
+                this.loadedGames.add(gameInstance);
+                Bukkit.getLogger().info("Loaded game: " + gameInstance.getName() + ", by: " + gameInstance.getAuthors());
+            } else {
                 Bukkit.getLogger().warning("Failed to load game: " + game + ", are you sure it exists?");
             }
         }
