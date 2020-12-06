@@ -1,0 +1,6 @@
+games:
+  - tntrun
+
+chat:
+  format-enabled: true
+  format: "{level} - {username}: {message}"

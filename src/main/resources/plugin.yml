@@ -1,0 +1,5 @@
+name: DynGames
+version: ${project.version}
+main: org.dyngames.dyngames.DynGames
+api-version: 1.16
+authors: [ Aberdener, 2xjtn ]
