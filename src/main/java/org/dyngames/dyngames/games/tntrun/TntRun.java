@@ -3,6 +3,7 @@ package org.dyngames.dyngames.games.tntrun;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.dyngames.dyngames.DynGames;
@@ -25,11 +26,16 @@ public class TntRun implements DynGamesGame {
 
     @Getter
     private static TntRun instance;
+    @Getter
     private Location spawnLocation;
     @Getter
     private Location respawnLocation;
     @Getter
-    private List<UUID> deadPlayers = Lists.newArrayList();
+    private final List<UUID> deadPlayers = Lists.newArrayList();
+    @Getter
+    private boolean gameStarted = false;
+    @Getter
+    private final List<UUID> totalPlayers = Lists.newArrayList();
 
     @Override
     public void enable() {
@@ -59,19 +65,32 @@ public class TntRun implements DynGamesGame {
     @Override
     public void start() {
 
-        for (UUID uuid : DynGames.getQueuedPlayers()) {
+        for (UUID uuid : DynGames.getInstance().getQueuedPlayers()) {
             Player player = Bukkit.getPlayer(uuid);
-
-            player.teleport(spawnLocation);
-
+            if (player != null) {
+                this.totalPlayers.add(player.getUniqueId());
+                player.setGameMode(GameMode.ADVENTURE);
+                player.teleport(this.spawnLocation);
+                player.sendMessage(Messages.GAME_STARTING_TEN_SECONDS);
+            }
         }
+
+        Bukkit.getScheduler().runTaskLater(DynGames.getInstance(), () -> {
+            for (UUID uuid : this.totalPlayers) {
+                Player player = Bukkit.getPlayer(uuid);
+                if (player != null) {
+                    player.teleport(this.respawnLocation);
+                    player.sendMessage(Messages.GAME_STARTED);
+                }
+            }
+            this.gameStarted = true;
+        }, 200L);
     }
 
     @Override
     public Object getOption(String path) {
         return DynGames.getInstance().getConfig().get("games.tntrun." + path);
     }
-
 
     @Override
     public void disable() { }

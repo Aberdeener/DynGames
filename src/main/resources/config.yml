@@ -1,5 +1,4 @@
-# A list of games which should be enabled
-# Options: tntrun
+# All supported DynGames games and their settings
 games:
   tntrun:
     enabled: true
@@ -26,3 +25,14 @@ chat:
   format: "%level%&7 -&r%username%&7: %message%"
   # If this is false, messages will be displayed only to players in the same world as the chatter
   global-chat: true
+
+# Queue options
+queue:
+  # Location of queue, this is where players will be teleported when a game ends
+  location:
+    world: queue
+      x:
+      y:
+      z:
+      pitch:
+      yaw:

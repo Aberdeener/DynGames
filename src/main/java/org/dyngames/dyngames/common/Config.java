@@ -1,12 +1,14 @@
 package org.dyngames.dyngames.common;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.dyngames.dyngames.DynGames;
 
 public class Config {
 
     /**
-     * A list of game names which should be loaded and enabled
+     * All games
      */
     public static final ConfigurationSection GAMES = DynGames.getInstance().getConfig().getConfigurationSection("games");
 
@@ -24,6 +26,15 @@ public class Config {
      * A boolean whether chat should be global (server wide) or just in the player's world
      */
     public static final boolean GLOBAL_CHAT = (boolean) get("chat.global-chat", true);
+
+    /**
+     * A {@link org.bukkit.Location} to respawn players when they join the queue, and when a game ends
+     */
+    public static final Location QUEUE_LOCATION = new Location(Bukkit.getWorld((String) get("queue.location.world")), (double) get("queue.location.x"), (double) get("queue.location.y"), (double) get("queue.location.z"), (float) get("queue.location.pitch"), (float) get("queue.location.yaw"));
+
+    private static Object get(String path) {
+        return get(path, null);
+    }
 
     private static Object get(String path, Object fallback) {
         Object value = DynGames.getInstance().getConfig().get(path);

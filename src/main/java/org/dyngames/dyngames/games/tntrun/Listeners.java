@@ -12,6 +12,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.dyngames.dyngames.DynGames;
+import org.dyngames.dyngames.api.User;
+import org.dyngames.dyngames.common.Config;
 
 
 public class Listeners implements Listener {
@@ -20,33 +22,59 @@ public class Listeners implements Listener {
     public void onPlayerMove(PlayerMoveEvent event) {
         Player player = event.getPlayer();
 
-        if (!TntRun.getInstance().getDeadPlayers().contains(player.getUniqueId())) {
+        if (TntRun.getInstance().isGameStarted()) {
+            if (!TntRun.getInstance().getDeadPlayers().contains(player.getUniqueId())) {
 
-            Location location = event.getPlayer().getLocation();
+                Location location = event.getPlayer().getLocation();
 
-            Location blockUnder = new Location(location.getWorld(), location.getBlockX(), location.getBlockY() - 1, location.getBlockZ());
+                Location blockUnder = new Location(location.getWorld(), location.getBlockX(), location.getBlockY() - 1, location.getBlockZ());
 
-            if (location.getWorld().getBlockAt(blockUnder).getType() == Material.TNT) {
+                if (location.getWorld().getBlockAt(blockUnder).getType() == Material.TNT) {
 
-                Block block = blockUnder.getBlock().getLocation().getBlock();
+                    Block block = blockUnder.getBlock().getLocation().getBlock();
 
-                Bukkit.getScheduler().scheduleSyncDelayedTask(DynGames.getInstance(), () -> {
-                    block.setType(Material.AIR);
-                }, 10);
+                    Bukkit.getScheduler().scheduleSyncDelayedTask(DynGames.getInstance(), () -> {
+                        block.setType(Material.AIR);
+                    }, 6);
+                }
             }
         }
     }
 
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
-        TntRun.getInstance().getDeadPlayers().add(event.getEntity().getUniqueId());
-        event.getEntity().setGameMode(GameMode.SPECTATOR);
-        event.getEntity().teleport(TntRun.getInstance().getRespawnLocation());
+        Player player = event.getEntity();
+        if (TntRun.getInstance().isGameStarted()) {
+            TntRun.getInstance().getDeadPlayers().add(player.getUniqueId());
+
+            int totalPlayers = TntRun.getInstance().getTotalPlayers().size();
+            int remainingPlayers = (totalPlayers - TntRun.getInstance().getDeadPlayers().size());
+            if (remainingPlayers <= 0) {
+                for (Player p : player.getWorld().getPlayers()) {
+                    User user = DynGames.getInstance().getUser(p);
+                    user.sendMessage(Messages.GAME_OVER, player.getDisplayName());
+                    p.setGameMode(GameMode.ADVENTURE);
+                    p.teleport(Config.QUEUE_LOCATION);
+                }
+                player.sendMessage(Messages.YOU_WON);
+            } else {
+                player.setGameMode(GameMode.SPECTATOR);
+                player.teleport(TntRun.getInstance().getRespawnLocation());
+                for (Player p : player.getWorld().getPlayers()) {
+                    User user = DynGames.getInstance().getUser(p);
+                    user.sendMessage(Messages.PLAYERS_REMAINING, player.getDisplayName(), remainingPlayers);
+                }
+            }
+            
+        } else {
+            player.setGameMode(GameMode.ADVENTURE);
+            player.teleport(TntRun.getInstance().getSpawnLocation());
+        }
     }
 
     @EventHandler
     public void onPlayerDamage(EntityDamageEvent event) {
-        if (event.getEntity().getWorld().getName() == DynGames.getInstance().getCurrentGame().getOption("world.name")) {
+        if (event.getEntity().getWorld().getName().equals(TntRun.getInstance().getOption("world.name"))) {
             if (event.getCause() == EntityDamageEvent.DamageCause.FALL) {
                 event.setCancelled(true);
             }

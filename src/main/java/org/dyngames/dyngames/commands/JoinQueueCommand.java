@@ -21,9 +21,9 @@ public class JoinQueueCommand implements CommandExecutor {
 
         if (sender.hasPermission(Permissions.JOIN_QUEUE_COMMAND)) {
             User user = DynGames.getInstance().getUser((Player) sender);
-            DynGames.getQueuedPlayers().add(user.getPlayer().getUniqueId());
+            DynGames.getInstance().getQueuedPlayers().add(user.getPlayer().getUniqueId());
 
-            user.sendMessage(Messages.JOINED_QUEUE, DynGames.getQueuedPlayers().size());
+            user.sendMessage(Messages.JOINED_QUEUE, DynGames.getInstance().getQueuedPlayers().size());
         } else {
             sender.sendMessage(Messages.NO_PERMISSION);
         }

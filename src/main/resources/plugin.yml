@@ -6,3 +6,5 @@ authors: [ Aberdener, 2xjtn ]
 commands:
     joinqueue:
         description: Join the queue for when the next minigame starts.
+    dyngamesdebug:
+        description: Get information on DynGames loaded assets.

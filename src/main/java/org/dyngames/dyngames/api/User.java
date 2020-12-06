@@ -1,25 +1,29 @@
 package org.dyngames.dyngames.api;
 
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.dyngames.dyngames.DynGames;
 
 public class User {
 
     @Getter
-    private final Player player;
+    private Player player;
     @Getter
-    private final String username;
+    private String username;
     @Getter
-    private final int level;
+    private int level;
 
     public User(Player player) {
-        this.player = player;
-        this.username = player.getName();
-        this.level = 0; // TODO: Get and store info in db of some sort
+        String username = player.getName();
+        Bukkit.getScheduler().runTaskAsynchronously(DynGames.getInstance(), () -> {
+            this.player = player;
+            this.username = username;
+            this.level = 0; // TODO: Get and store info in db of some sort
+        });
     }
 
     public void sendMessage(String message, Object... replacements) {
-        message = String.format(message, replacements);
-        this.getPlayer().sendMessage(message);
+        this.getPlayer().sendMessage(String.format(message, replacements));
     }
 }

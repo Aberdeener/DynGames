@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dyngames.dyngames.api.User;
 import org.dyngames.dyngames.api.Utils;
+import org.dyngames.dyngames.commands.DebugCommand;
 import org.dyngames.dyngames.commands.JoinQueueCommand;
 import org.dyngames.dyngames.common.Config;
 import org.dyngames.dyngames.common.DynGamesGame;
@@ -24,7 +25,7 @@ public final class DynGames extends JavaPlugin {
     private final List<DynGamesGame> loadedGames = Lists.newArrayList();
     private final Map<Player, User> loadedUsers = new HashMap<>();
     @Getter
-    private static final Set<UUID> queuedPlayers = new HashSet<>();
+    private final Set<UUID> queuedPlayers = new HashSet<>();
     @Getter
     @Setter
     private DynGamesGame currentGame = null;
@@ -36,6 +37,7 @@ public final class DynGames extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
         getCommand("joinqueue").setExecutor(new JoinQueueCommand());
+        getCommand("dyngamesdebug").setExecutor(new DebugCommand());
 
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -102,6 +104,6 @@ public final class DynGames extends JavaPlugin {
 
     public void removeUser(Player player) {
         this.loadedUsers.remove(player);
-        getQueuedPlayers().remove(player.getUniqueId());
+        this.queuedPlayers.remove(player.getUniqueId());
     }
 }

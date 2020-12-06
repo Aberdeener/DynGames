@@ -8,7 +8,7 @@ public class Messages {
 
     public static String NO_PERMISSION = ChatColor.RED + "You do not have permission to use this command.";
 
-    public static String JOINED_QUEUE = ChatColor.GREEN + "Successfully joined the queue. There are now " + ChatColor.YELLOW + " d% " + ChatColor.GREEN + " players in queue.";
+    public static String JOINED_QUEUE = ChatColor.GREEN + "Successfully joined the queue. There are now " + ChatColor.YELLOW + "d%" + ChatColor.GREEN + " players in queue.";
 
     public static String NOT_ENOUGH_PLAYERS = ChatColor.RED + "Not enough players are in the queue to start a new game.";
 }
