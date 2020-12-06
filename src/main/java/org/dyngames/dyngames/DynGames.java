@@ -3,12 +3,16 @@ package org.dyngames.dyngames;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dyngames.dyngames.api.User;
-import org.dyngames.dyngames.common.*;
+import org.dyngames.dyngames.api.Utils;
+import org.dyngames.dyngames.commands.JoinQueueCommand;
+import org.dyngames.dyngames.common.Config;
+import org.dyngames.dyngames.common.DynGamesGame;
+import org.dyngames.dyngames.common.Messages;
+import org.dyngames.dyngames.common.PlayerListener;
 import org.dyngames.dyngames.games.tntrun.TntRun;
 
 import java.util.*;
@@ -20,7 +24,7 @@ public final class DynGames extends JavaPlugin {
     private final List<DynGamesGame> loadedGames = Lists.newArrayList();
     private final Map<Player, User> loadedUsers = new HashMap<>();
     @Getter
-    private static Set<UUID> queuedPlayers = new HashSet<>();
+    private static final Set<UUID> queuedPlayers = new HashSet<>();
     @Getter
     @Setter
     private DynGamesGame currentGame = null;
@@ -30,6 +34,8 @@ public final class DynGames extends JavaPlugin {
         instance = this;
 
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+
+        getCommand("joinqueue").setExecutor(new JoinQueueCommand());
 
         getConfig().options().copyDefaults(true);
         saveConfig();
@@ -41,7 +47,9 @@ public final class DynGames extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        //
+        for (DynGamesGame gameInstance : this.loadedGames) {
+            gameInstance.disable();
+        }
     }
 
     private void loadGames() {
@@ -58,7 +66,7 @@ public final class DynGames extends JavaPlugin {
                 if (loaded) {
                     gameInstance.enable();
                     this.loadedGames.add(gameInstance);
-                    Bukkit.getLogger().info("Loaded game: " + gameInstance.getName() + ", by: " + gameInstance.getAuthors());
+                    Bukkit.getLogger().info("Loaded game: " + gameInstance.getName() + ", by: " + Utils.listToString(gameInstance.getAuthors()));
                 } else {
                     Bukkit.getLogger().warning("Failed to load game: " + game + ", are you sure it exists?");
                 }
@@ -71,7 +79,7 @@ public final class DynGames extends JavaPlugin {
             if (this.currentGame == null) {
 
                 DynGamesGame nextGame = this.loadedGames.get(new Random().nextInt(loadedGames.size()));
-                if (this.queuedPlayers.size() >= (int) nextGame.getOption("min_players")) {
+                if (queuedPlayers.size() >= (int) nextGame.getOption("min_players")) {
                     this.setCurrentGame(nextGame);
                     nextGame.start();
                 } else {

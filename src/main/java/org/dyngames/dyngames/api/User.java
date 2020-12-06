@@ -2,7 +2,6 @@ package org.dyngames.dyngames.api;
 
 import lombok.Getter;
 import org.bukkit.entity.Player;
-import org.dyngames.dyngames.common.DynGamesGame;
 
 public class User {
 
@@ -20,8 +19,7 @@ public class User {
     }
 
     public void sendMessage(String message, Object... replacements) {
-        message = message.formatted(replacements);
+        message = String.format(message, replacements);
         this.getPlayer().sendMessage(message);
     }
-
 }

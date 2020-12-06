@@ -3,10 +3,6 @@ package org.dyngames.dyngames.common;
 import org.bukkit.configuration.ConfigurationSection;
 import org.dyngames.dyngames.DynGames;
 
-import java.util.Collections;
-import java.util.List;
-
-@SuppressWarnings("unchecked")
 public class Config {
 
     /**

@@ -1,6 +1,5 @@
 package org.dyngames.dyngames.common;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public class Messages {
