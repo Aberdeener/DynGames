@@ -18,7 +18,7 @@ public final class DynGames extends JavaPlugin {
     @Getter
     private static DynGames instance;
     private final List<DynGamesGame> loadedGames = Lists.newArrayList();
-    private final HashMap<Player, User> loadedUsers = new HashMap<>();
+    private final Map<Player, User> loadedUsers = new HashMap<>();
     @Getter
     private static Set<UUID> queuedPlayers = new HashSet<>();
     @Getter
@@ -33,8 +33,6 @@ public final class DynGames extends JavaPlugin {
 
         getConfig().options().copyDefaults(true);
         saveConfig();
-
-        this.getCommand("joinqueue").setExecutor(new JoinQueueCommand());
 
         this.loadGames();
 

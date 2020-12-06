@@ -1,8 +1,9 @@
 package org.dyngames.dyngames.games.tntrun;
 
+import com.google.common.collect.Lists;
+import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.dyngames.dyngames.DynGames;
 import org.dyngames.dyngames.api.User;
@@ -22,11 +23,21 @@ public class TntRun implements DynGamesGame {
         return Arrays.asList("Aberdeener", "2xjtn");
     }
 
+    @Getter
+    private static TntRun instance;
     private Location spawnLocation;
+    @Getter
     private Location respawnLocation;
+    @Getter
+    private List<UUID> deadPlayers = Lists.newArrayList();
 
     @Override
     public void enable() {
+
+        instance = this;
+
+        Bukkit.getPluginManager().registerEvents(new Listeners(), DynGames.getInstance());
+
         this.spawnLocation = new Location(
                 Bukkit.getWorld(String.valueOf(this.getOption("world.name"))),
                 (double) this.getOption("world.spawn.x"),
@@ -48,9 +59,8 @@ public class TntRun implements DynGamesGame {
     @Override
     public void start() {
 
-        for(UUID uuid : DynGames.getQueuedPlayers()) {
+        for (UUID uuid : DynGames.getQueuedPlayers()) {
             Player player = Bukkit.getPlayer(uuid);
-            User user = DynGames.getInstance().getUser(player);
 
             player.teleport(spawnLocation);
 
@@ -64,6 +74,5 @@ public class TntRun implements DynGamesGame {
 
 
     @Override
-    public void disable() {
-    }
+    public void disable() { }
 }
