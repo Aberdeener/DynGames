@@ -4,8 +4,6 @@ import java.util.List;
 
 public interface DynGamesGame {
 
-    void load();
-
     String getName();
 
     List<String> getAuthors();

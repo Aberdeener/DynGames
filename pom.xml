@@ -34,19 +34,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
-                <configuration>
-                    <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
-                    <relocations>
-                        <relocation>
-                            <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>org.dyngames.dyngames.acf</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>org.dyngames.dyngames.locales</shadedPattern>
-                        </relocation>
-                    </relocations>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -80,11 +67,6 @@
             <url>https://oss.sonatype.org/content/groups/public/</url>
         </repository>
 
-        <repository>
-            <id>aikar</id>
-            <url>https://repo.aikar.co/content/groups/aikar/</url>
-        </repository>
-
     </repositories>
 
     <dependencies>
@@ -101,12 +83,6 @@
             <artifactId>lombok</artifactId>
             <version>1.18.16</version>
             <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-paper</artifactId>
-            <version>0.5.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
