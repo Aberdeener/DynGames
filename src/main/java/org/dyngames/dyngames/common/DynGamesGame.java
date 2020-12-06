@@ -10,6 +10,10 @@ public interface DynGamesGame {
 
     void enable();
 
+    void start();
+
     void disable();
+
+    Object getOption(String path);
 
 }

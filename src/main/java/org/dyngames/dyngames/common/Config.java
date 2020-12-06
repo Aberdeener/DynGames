@@ -1,5 +1,6 @@
 package org.dyngames.dyngames.common;
 
+import org.bukkit.configuration.ConfigurationSection;
 import org.dyngames.dyngames.DynGames;
 
 import java.util.Collections;
@@ -11,7 +12,7 @@ public class Config {
     /**
      * A list of game names which should be loaded and enabled
      */
-    public static final List<String> GAMES = (List<String>) get("games", Collections.emptyList());
+    public static final ConfigurationSection GAMES = DynGames.getInstance().getConfig().getConfigurationSection("games");
 
     /**
      * A boolean whether DynGames should touch chat formatting at all

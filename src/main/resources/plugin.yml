@@ -3,3 +3,6 @@ version: ${project.version}
 main: org.dyngames.dyngames.DynGames
 api-version: 1.16
 authors: [ Aberdener, 2xjtn ]
+commands:
+    joinqueue:
+        description: Join the queue for when the next minigame starts.

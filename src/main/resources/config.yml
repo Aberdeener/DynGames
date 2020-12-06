@@ -1,7 +1,22 @@
 # A list of games which should be enabled
 # Options: tntrun
 games:
-  - tntrun
+  tntrun:
+    enabled: true
+    world:
+      name: tntrun
+      spawn:
+        x:
+        y:
+        z:
+        pitch:
+        yaw:
+      respawn:
+        x:
+        y:
+        z:
+        pitch:
+        yaw:
 
 # Chat options
 chat:
