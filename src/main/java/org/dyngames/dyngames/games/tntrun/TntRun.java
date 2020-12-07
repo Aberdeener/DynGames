@@ -5,6 +5,7 @@ import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.dyngames.dyngames.DynGames;
 import org.dyngames.dyngames.api.User;
@@ -36,6 +37,8 @@ public class TntRun implements DynGamesGame {
     private boolean gameStarted = false;
     @Getter
     private final List<UUID> totalPlayers = Lists.newArrayList();
+    @Getter
+    private int minPlayers;
 
     @Override
     public void enable() {
@@ -44,8 +47,10 @@ public class TntRun implements DynGamesGame {
 
         Bukkit.getPluginManager().registerEvents(new Listeners(), DynGames.getInstance());
 
+        World gameWorld = Bukkit.getWorld(String.valueOf(this.getOption("world.name")));
+
         this.spawnLocation = new Location(
-            Bukkit.getWorld(String.valueOf(this.getOption("world.name"))),
+            gameWorld,
             (double) this.getOption("world.spawn.x"),
             (double) this.getOption("world.spawn.y"),
             (double) this.getOption("world.spawn.z"),
@@ -53,13 +58,15 @@ public class TntRun implements DynGamesGame {
             (float) ((double) this.getOption("world.spawn.yaw"))
         );
         this.respawnLocation = new Location(
-            Bukkit.getWorld(String.valueOf(this.getOption("world.name"))),
+            gameWorld,
             (double) this.getOption("world.respawn.x"),
             (double) this.getOption("world.respawn.y"),
             (double) this.getOption("world.respawn.z"),
             (float) ((double) this.getOption("world.respawn.pitch")),
             (float) ((double) this.getOption("world.respawn.yaw"))
         );
+
+        this.minPlayers = (int) this.getOption("min_players");
     }
 
     @Override

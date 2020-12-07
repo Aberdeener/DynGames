@@ -19,15 +19,16 @@ public class JoinQueueCommand implements CommandExecutor {
             return true;
         }
 
-        if (sender.hasPermission(Permissions.JOIN_QUEUE_COMMAND)) {
-            User user = DynGames.getInstance().getUser((Player) sender);
-            DynGames.getInstance().getQueuedPlayers().add(user.getPlayer().getUniqueId());
-
-            user.sendMessage(Messages.JOINED_QUEUE, DynGames.getInstance().getQueuedPlayers().size());
-        } else {
+        if (!sender.hasPermission(Permissions.JOIN_QUEUE_COMMAND)) {
             sender.sendMessage(Messages.NO_PERMISSION);
+            return true;
         }
 
-        return false;
+        User user = DynGames.getInstance().getUser((Player) sender);
+        DynGames.getInstance().getQueuedPlayers().add(user.getPlayer().getUniqueId());
+
+        user.sendMessage(Messages.JOINED_QUEUE, DynGames.getInstance().getQueuedPlayers().size());
+
+        return true;
     }
 }

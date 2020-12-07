@@ -9,18 +9,24 @@ import org.dyngames.dyngames.DynGames;
 public class User {
 
     @Getter
-    private Player player;
+    private final Player player;
     @Getter
-    private String username;
+    private final String username;
     @Getter
     private int level;
 
     public User(Player player) {
-        String username = player.getName();
+        this.player = player;
+        this.username = player.getName();
         Bukkit.getScheduler().runTaskAsynchronously(DynGames.getInstance(), () -> {
-            this.player = player;
-            this.username = username;
-            this.level = 0; // TODO: Get and store info in db of some sort
+            // TODO: Get db stats here
+            this.level = 0;
+        });
+    }
+
+    public void update() {
+        Bukkit.getScheduler().runTaskAsynchronously(DynGames.getInstance(), () -> {
+           // Save stats
         });
     }
 

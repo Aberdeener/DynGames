@@ -8,11 +8,15 @@ public interface DynGamesGame {
 
     List<String> getAuthors();
 
+    DynGamesGame getInstance();
+
     void enable();
 
     void start();
 
     void disable();
+
+    int getMinPlayers();
 
     Object getOption(String path);
 

@@ -19,12 +19,13 @@ public class StartGameCommand implements CommandExecutor {
             return true;
         }
 
-        if (sender.hasPermission(Permissions.FORCE_START_GAME_COMMAND)) {
-            User user = DynGames.getInstance().getUser((Player) sender);
-        } else {
+        if (!sender.hasPermission(Permissions.FORCE_START_GAME_COMMAND)) {
             sender.sendMessage(Messages.NO_PERMISSION);
+            return true;
         }
-        
+
+        User user = DynGames.getInstance().getUser((Player) sender);
+
         return true;
     }
 }

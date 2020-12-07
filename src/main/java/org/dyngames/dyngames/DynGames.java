@@ -49,6 +49,9 @@ public final class DynGames extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        for (User user : this.loadedUsers.values()) {
+            user.update();
+        }
         for (DynGamesGame gameInstance : this.loadedGames) {
             gameInstance.disable();
         }
@@ -80,6 +83,7 @@ public final class DynGames extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             if (this.currentGame == null) {
 
+                // TODO: write alg to find game with minPlayers() closest to the queuedPlayers.size()
                 DynGamesGame nextGame = this.loadedGames.get(new Random().nextInt(loadedGames.size()));
                 int queuedPlayersCount = queuedPlayers.size();
                 int minPlayers = (int) nextGame.getOption("min_players");
@@ -89,7 +93,7 @@ public final class DynGames extends JavaPlugin {
                 } else {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         User user = this.getUser(player);
-                       user.sendMessage(Messages.NOT_ENOUGH_PLAYERS, (minPlayers - queuedPlayersCount));
+                       user.sendMessage(Messages.NOT_ENOUGH_PLAYERS, nextGame.getMinPlayers(), (minPlayers - queuedPlayersCount));
                     }
                 }
             }

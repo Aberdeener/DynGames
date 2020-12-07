@@ -8,7 +8,7 @@ import org.dyngames.dyngames.DynGames;
 public class Config {
 
     /**
-     * All games
+     * All games and their settings
      */
     public static final ConfigurationSection GAMES = DynGames.getInstance().getConfig().getConfigurationSection("games");
 
@@ -20,7 +20,7 @@ public class Config {
     /**
      * A string with some placeholders on how chat should be formatted. No effect if CHAT_FORMAT_ENABLED is false
      */
-    public static final String CHAT_FORMAT = (String) get("chat.format", "%level%&7 -&r%username%&7: %message%");
+    public static final String CHAT_FORMAT = (String) get("chat.format", "&8[&c%level%&8]&7 - &r%username%&7: %message%");
 
     /**
      * A boolean whether chat should be global (server wide) or just in the player's world

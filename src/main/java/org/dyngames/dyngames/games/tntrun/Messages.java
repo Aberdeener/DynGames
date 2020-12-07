@@ -4,7 +4,7 @@ import org.bukkit.ChatColor;
 
 public class Messages {
 
-    public static final String GAME_STARTING_TEN_SECONDS = ChatColor.GREEN + "The game will start in " + ChatColor.YELLOW + "10" + ChatColor.GREEN + " seconds!";
+    public static final String GAME_STARTING_TEN_SECONDS = ChatColor.GREEN + "TNT Run will start in " + ChatColor.YELLOW + "10" + ChatColor.GREEN + " seconds!";
 
     public static final String GAME_STARTED = ChatColor.GREEN + "The game has started!";
 

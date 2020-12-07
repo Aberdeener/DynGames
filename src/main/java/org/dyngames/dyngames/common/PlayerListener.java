@@ -37,6 +37,7 @@ public class PlayerListener implements Listener {
             if (Config.GLOBAL_CHAT) {
                 Bukkit.broadcastMessage(message);
             } else {
+                Bukkit.getConsoleSender().sendMessage(message);
                 for (Player p : player.getWorld().getPlayers()) {
                     p.sendMessage(message);
                 }

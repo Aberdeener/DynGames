@@ -23,7 +23,7 @@ chat:
   # Should DynGames format all chat messages?
   format-enabled: true
   # If format-enabled is true, use this format to display chat messages to users
-  format: "%level%&7 -&r%username%&7: %message%"
+  format: "&8[&c%level%&8]&7 - &r%username%&7: %message%"
   # If this is false, messages will be displayed only to players in the same world as the chatter
   global-chat: true
 
