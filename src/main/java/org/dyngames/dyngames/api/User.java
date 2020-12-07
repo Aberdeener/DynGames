@@ -2,6 +2,7 @@ package org.dyngames.dyngames.api;
 
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.dyngames.dyngames.DynGames;
 
@@ -24,6 +25,6 @@ public class User {
     }
 
     public void sendMessage(String message, Object... replacements) {
-        this.getPlayer().sendMessage(String.format(message, replacements));
+        this.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', String.format(message.replaceAll("§", "&"), replacements)));
     }
 }

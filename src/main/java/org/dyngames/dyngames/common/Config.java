@@ -30,7 +30,14 @@ public class Config {
     /**
      * A {@link org.bukkit.Location} to respawn players when they join the queue, and when a game ends
      */
-    public static final Location QUEUE_LOCATION = new Location(Bukkit.getWorld((String) get("queue.location.world")), (double) get("queue.location.x"), (double) get("queue.location.y"), (double) get("queue.location.z"), (float) get("queue.location.pitch"), (float) get("queue.location.yaw"));
+    public static final Location QUEUE_LOCATION = new Location(
+        Bukkit.getWorld((String) get("queue.location.world")),
+        (double) get("queue.location.x"),
+        (double) get("queue.location.y"),
+        (double) get("queue.location.z"),
+        (float) ((double) get("queue.location.pitch")),
+        (float) ((double) get("queue.location.yaw"))
+    );
 
     private static Object get(String path) {
         return get(path, null);

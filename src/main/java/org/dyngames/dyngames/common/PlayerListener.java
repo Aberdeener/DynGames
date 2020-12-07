@@ -1,6 +1,7 @@
 package org.dyngames.dyngames.common;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -29,10 +30,10 @@ public class PlayerListener implements Listener {
             Player player = event.getPlayer();
             User user = DynGames.getInstance().getUser(player);
             String message = Config.CHAT_FORMAT;
-            message = message
+            message = ChatColor.translateAlternateColorCodes('&', message
                     .replace("%level%", String.valueOf(user.getLevel()))
-                    .replace("%player%", player.getDisplayName())
-                    .replace("%message%", event.getMessage());
+                    .replace("%username%", player.getDisplayName())
+                    .replace("%message%", event.getMessage()));
             if (Config.GLOBAL_CHAT) {
                 Bukkit.broadcastMessage(message);
             } else {

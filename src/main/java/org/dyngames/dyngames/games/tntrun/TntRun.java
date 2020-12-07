@@ -45,20 +45,20 @@ public class TntRun implements DynGamesGame {
         Bukkit.getPluginManager().registerEvents(new Listeners(), DynGames.getInstance());
 
         this.spawnLocation = new Location(
-                Bukkit.getWorld(String.valueOf(this.getOption("world.name"))),
-                (double) this.getOption("world.spawn.x"),
-                (double) this.getOption("world.spawn.y"),
-                (double) this.getOption("world.spawn.z"),
-                (float) this.getOption("world.spawn.pitch"),
-                (float) this.getOption("world.spawn.yaw")
+            Bukkit.getWorld(String.valueOf(this.getOption("world.name"))),
+            (double) this.getOption("world.spawn.x"),
+            (double) this.getOption("world.spawn.y"),
+            (double) this.getOption("world.spawn.z"),
+            (float) ((double) this.getOption("world.spawn.pitch")),
+            (float) ((double) this.getOption("world.spawn.yaw"))
         );
         this.respawnLocation = new Location(
             Bukkit.getWorld(String.valueOf(this.getOption("world.name"))),
             (double) this.getOption("world.respawn.x"),
             (double) this.getOption("world.respawn.y"),
             (double) this.getOption("world.respawn.z"),
-            (float) this.getOption("world.respawn.pitch"),
-            (float) this.getOption("world.respawn.yaw")
+            (float) ((double) this.getOption("world.respawn.pitch")),
+            (float) ((double) this.getOption("world.respawn.yaw"))
         );
     }
 
@@ -70,7 +70,7 @@ public class TntRun implements DynGamesGame {
             if (player != null) {
                 this.totalPlayers.add(player.getUniqueId());
                 player.setGameMode(GameMode.ADVENTURE);
-                player.teleport(this.spawnLocation);
+                player.teleport(spawnLocation);
                 player.sendMessage(Messages.GAME_STARTING_TEN_SECONDS);
             }
         }
@@ -79,7 +79,7 @@ public class TntRun implements DynGamesGame {
             for (UUID uuid : this.totalPlayers) {
                 Player player = Bukkit.getPlayer(uuid);
                 if (player != null) {
-                    player.teleport(this.respawnLocation);
+                    player.teleport(respawnLocation);
                     player.sendMessage(Messages.GAME_STARTED);
                 }
             }

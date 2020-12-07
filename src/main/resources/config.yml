@@ -2,20 +2,21 @@
 games:
   tntrun:
     enabled: true
+    min_players: 2
     world:
       name: tntrun
       spawn:
-        x:
-        y:
-        z:
-        pitch:
-        yaw:
+        x: 1.0
+        y: 1.0
+        z: 1.0
+        pitch: 1.0
+        yaw: 1.0
       respawn:
-        x:
-        y:
-        z:
-        pitch:
-        yaw:
+        x: 1.0
+        y: 1.0
+        z: 1.0
+        pitch: 1.0
+        yaw: 1.0
 
 # Chat options
 chat:
@@ -31,8 +32,8 @@ queue:
   # Location of queue, this is where players will be teleported when a game ends
   location:
     world: queue
-      x:
-      y:
-      z:
-      pitch:
-      yaw:
+    x: 1.0
+    y: 1.0
+    z: 1.0
+    pitch: 1.0
+    yaw: 1.0

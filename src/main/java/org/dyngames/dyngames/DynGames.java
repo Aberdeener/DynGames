@@ -81,11 +81,16 @@ public final class DynGames extends JavaPlugin {
             if (this.currentGame == null) {
 
                 DynGamesGame nextGame = this.loadedGames.get(new Random().nextInt(loadedGames.size()));
-                if (queuedPlayers.size() >= (int) nextGame.getOption("min_players")) {
+                int queuedPlayersCount = queuedPlayers.size();
+                int minPlayers = (int) nextGame.getOption("min_players");
+                if (queuedPlayersCount >= minPlayers) {
                     this.setCurrentGame(nextGame);
                     nextGame.start();
                 } else {
-                    Bukkit.broadcastMessage(Messages.NOT_ENOUGH_PLAYERS);
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        User user = this.getUser(player);
+                       user.sendMessage(Messages.NOT_ENOUGH_PLAYERS, (minPlayers - queuedPlayersCount));
+                    }
                 }
             }
         }, 600L, 600L);
